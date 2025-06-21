@@ -1,7 +1,5 @@
-<script lang="ts" setup>
-
-</script>
-
 <template>
-  <Invite /> 
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

@@ -46,17 +46,42 @@ function onDetect(detectedCodes) {
 </script>
 
 <template>
-  <div>
-    <h1>Simple Demo</h1>
+  <div class="lg:max-w-5xl mx-auto p-4 lg:flex">
+    <div class="lg:max-w-md mt-8 lg:my-40 mx-auto w-full">
+          <h1 class="text-center text-2xl font-bold mb-4">🎉 Contrôle des Invitations</h1>
+      <div class="mb-4">
+        <p class="text-red-600 font-semibold" v-if="error">{{ error }}</p>
+        <p class="text-green-600 font-semibold" v-else-if="result">✅ Code détecté : {{ result }}</p>
+      </div>
 
-    <p style="color: red">{{ error }}</p>
-
-    <p>Last result: <b>{{ result }}</b></p>
-
-    <div style="border: 2px solid black; padding: 1rem;">
-      <ClientOnly>
-        <QrcodeStream :track="paintBoundingBox" @detect="onDetect" @error="onError"></QrcodeStream>
-      </ClientOnly>
+      <div>
+        <h2 class="text-xl font-semibold mb-2">📋 Liste des invités</h2>
+        <p>Dernier code : <b>{{ result }}</b></p>
+        <ul class="mt-2 space-y-1">
+          <li
+            v-for="invite in invites"
+            :key="invite.name"
+            class="flex justify-between p-2 border rounded"
+          >
+            <span>{{ invite.name }}</span>
+            <span :class="invite.statut ? 'text-green-600' : 'text-red-600'">
+              {{ invite.statut ? '✅ Scanné' : '❌ Non scanné' }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+      <div class="border-2 border-black rounded-2xl p-4 my-20 w-full">
+        <h3 class="text-lg font-semibold mb-2">QR Code pour valider votre présence</h3>
+        <div class="relative h-96">
+          <ClientOnly>
+            <QrcodeStream
+            :track="paintBoundingBox"
+            @detect="onDetect"
+            @error="onError"
+            />
+          </ClientOnly>
+        </div>
     </div>
   </div>
 </template>

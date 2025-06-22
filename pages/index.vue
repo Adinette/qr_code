@@ -18,7 +18,7 @@ const resetValidationState = () => {
     isValid.value = undefined;
 };
 
-const invites = [
+let invites = [
     {
         scanned: false,
         code: "8D91F8F3"
@@ -635,11 +635,11 @@ const onDetecte = async (content) => {
         playSound(error);
     } else {
         const invite = invites[index];
-        if (invite.statut === true) {
+        if (invite.scanned === true) {
             isValid.value = false;
             playSound(error);
         } else {
-            invite.statut = true;
+            invite.scanned = true;
             isValid.value = true;
             playSound(success);
         }
